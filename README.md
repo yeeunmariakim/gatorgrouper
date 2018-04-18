@@ -35,7 +35,7 @@ Select the **Create a new spreadsheet** option. You can choose to leave the name
 
 ![create-spreadsheet](img/create-spreadsheet.png "Create spreadsheet")
 
-After setting up the Google Form, please follow this [tutorial](https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html) to create a service account with the email you used to create the Google Form.  
+After setting up the Google Form, please follow this [tutorial](https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html) to create a service account with the email you used to create the Google Form. In addition to enabling the Google Drive API, also enable the Google Sheets API.
 
 Once you have generated your `client_secret.json` file, place it in the GatorGrouper root directory. It has been added to the `.gitignore` and should never be pushed to the repository. As the tutorial states, make sure to share the spreadsheet you created from your Google Form with the `client_email` in `client_secret.json`. This setup should take no longer than 5 minutes.
 
