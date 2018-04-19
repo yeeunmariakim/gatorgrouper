@@ -6,6 +6,9 @@ import numpy as np
 def evolve(population_size: int, mutation_rate: float, crossover_rate: float, fitness: Function, mutations: List[Function], create: Function):
 
 
+def crossover(individual_one: Individual, individual_two: Individual):
+
+
 def mutate(mutations: List[Function], grouping: List[List[Student]]):
     """Mutate a grouping with a randomly chosen mutation."""
     return random.choice(mutations)(grouping)
