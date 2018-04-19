@@ -28,7 +28,7 @@ def parse(args):
 
     parser.add_argument(
         "--group-size",
-        help="Number of students in a group",
+        help="Number of students per group",
         type=int,
         default=config.DEFAULT_GROUP_SIZE,
         required=False)

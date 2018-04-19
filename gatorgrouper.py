@@ -4,6 +4,7 @@ import sys
 import logging
 import workbook
 import arguments
+from colors import bold
 
 
 if __name__ == '__main__':
