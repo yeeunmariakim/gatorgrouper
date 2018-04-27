@@ -1,7 +1,7 @@
 import sys
 import random
 from typing import List
-import genetic_algorithm
+from genetic_algorithm import Student
 
 
 def replace_random(grouping: List[List[Student]]):

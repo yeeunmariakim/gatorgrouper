@@ -6,3 +6,4 @@ pytest-flake8==1.0.0
 pytest-cov==2.5.1
 ansicolors==1.1.8
 numpy==1.14.2
+pandas==0.22.0
