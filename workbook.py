@@ -8,6 +8,7 @@ from genetic_algorithm import Student
 from oauth2client.service_account import ServiceAccountCredentials
 import config
 import pandas as pd
+import os.path
 
 
 EMAIL_COL = None
@@ -24,43 +25,48 @@ def get(group_size):
     global PREFERENCES_COL
     global SKILLS_COLS
 
-    logging.info(
-        "Authenticating to Google Sheets...")
+    if not os.path.isfile(config.WORKBOOK_CSV):
+        logging.info(
+            "Authenticating to Google Sheets...")
 
-    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-    creds = ServiceAccountCredentials.from_json_keyfile_name(
-        'client_secret.json', scope)
-    client = gspread.authorize(creds)
+        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+        creds = ServiceAccountCredentials.from_json_keyfile_name(
+            'client_secret.json', scope)
+        client = gspread.authorize(creds)
 
-    logging.info("Opening spreadsheet...")
-    sheet = client.open(config.WORKBOOK).sheet1
+        logging.info("Opening spreadsheet...")
+        sheet = client.open(config.WORKBOOK).sheet1
 
-    logging.info("Extracting data from spreadsheet...")
-    records = sheet.get_all_records()
+        logging.info("Extracting data from spreadsheet...")
+        records = sheet.get_all_records()
 
-    formatted_records = list()
-    for entry in records:
-        formatted_entry = list()
-        for index, (question, response) in enumerate(entry.items()):
-            if question == 'Email Address':
-                EMAIL_COL = index - 1  # subtracting one because timestamp column not collected
-                formatted_entry.append(response)
-            elif "prefer" in question:
-                PREFERENCES_COL = index - 1
-                formatted_entry.append(response)
-            elif "skill" in question:
-                SKILLS_COLS.add(index - 1)
-                formatted_entry.append(response)
-        formatted_records.append(formatted_entry)
+        formatted_records = list()
+        for entry in records:
+            formatted_entry = list()
+            for index, (question, response) in enumerate(entry.items()):
+                if question == 'Email Address':
+                    EMAIL_COL = index - 1  # subtracting one because timestamp column not collected
+                    formatted_entry.append(response)
+                elif "prefer" in question:
+                    PREFERENCES_COL = index - 1
+                    formatted_entry.append(response)
+                elif "skill" in question:
+                    SKILLS_COLS.add(index - 1)
+                    formatted_entry.append(response)
+            formatted_records.append(formatted_entry)
 
-    logging.debug("Writing formatted records to " + config.WORKBOOK_CSV + "...")
-    with open(config.WORKBOOK_CSV, 'w') as output:
-        writer = csv.writer(output, quoting=csv.QUOTE_ALL)
-        for item in formatted_records:
-            writer.writerow(item)
+        logging.debug("Writing formatted records to " + config.WORKBOOK_CSV + "...")
+        with open(config.WORKBOOK_CSV, 'w') as output:
+            writer = csv.writer(output, quoting=csv.QUOTE_ALL)
+            for item in formatted_records:
+                writer.writerow(item)
 
     global STUDENTS
     global GROUPING_SIZE
+
+    EMAIL_COL = 0
+    PREFERENCES_COL = 1
+    SKILLS_COLS = [2, 3, 4, 5, 6]
 
     DATA = pd.read_csv(config.WORKBOOK_CSV, header=None)
 
