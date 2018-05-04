@@ -4,10 +4,11 @@ import csv
 import math
 import logging
 import gspread
-from genetic_algorithm import Student
-from oauth2client.service_account import ServiceAccountCredentials
-import config
 import pandas as pd
+from oauth2client.service_account import ServiceAccountCredentials
+
+from genetic_algorithm import Student
+import config
 
 
 EMAIL_COL = None

@@ -10,7 +10,7 @@ import config
 import workbook
 import arguments
 import mutations
-from genetic_algorithm import create
+from genetic_algorithm import create, calculate_fitness, evolve
 
 if __name__ == '__main__':
 
@@ -19,11 +19,13 @@ if __name__ == '__main__':
 
     workbook.get(GROUP_SIZE)
 
-    GROUPING = create()
+    # GROUPING = create()
+    #
+    # for index, group in enumerate(GROUPING):
+    #     print("Group " + str(index) + "\n")
+    #     for student in group:
+    #         print(student)
+    #
+    # print(calculate_fitness(GROUPING))
 
-    for index, group in enumerate(GROUPING):
-        print("Group " + str(index) + "\n")
-        for student in group:
-            print("\t" + student.email + "\n")
-
-    # evolve(30, 0.05, 0.8, calculate_fitness, mutations.get(), create)
+    evolve(60, 0.33, 0.16, 0.18, 0.66, mutations.get())
