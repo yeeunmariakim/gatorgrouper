@@ -81,8 +81,6 @@ To see detailed technical output to diagnose problems, use the flag `-d` or
 python gatorgrouper.py --debug
 ```
 
-<!-- TODO: ## Example output -->
-
 ## Troubleshooting
 
 If you encounter any problems with GatorGrouper, first make sure that:

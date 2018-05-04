@@ -7,6 +7,7 @@ import workbook
 import math
 
 
+
 class Student:
     """Represent student."""
     def __init__(self, email: str, skills: List[int], preferences: List[str]):
@@ -54,7 +55,7 @@ class Fitness:
         self.balance = balance
         self.fairness = fairness
         # FIXME: Can give weights to each variable
-        self.value = 1.5 * preference + 2 * balance + 1.5 * fairness
+        self.value = 0.5 * preference + 3.0 * balance + 1.5 * fairness
 
     def __gt__(self, other):
         return self.value > other.value
@@ -65,6 +66,10 @@ class Fitness:
         string += "Fairness: " + str(self.fairness) + "\n"
         string += "Value: " + str(self.value) + "\n"
         return string
+
+
+best_grouping = list()
+best_fitness = Fitness(0, 0, 0)
 
 
 def create():
@@ -87,12 +92,16 @@ def create():
 
 """population_size: int, mutation_rate: float, crossover_rate: float, fitness, mutations, create"""
 def evolve(population_size, mutation_rate, elitism_rate, create_rate, crossover_rate, mutations):
+
+    global best_grouping
+    global best_fitness
+
     print("in evolve")
     population = [create() for _ in range(population_size)]
     population = list(map(lambda grouping: Individual(grouping, calculate_fitness(grouping)), population))
 
     gen = 0
-    while gen < 1000:
+    while gen < 200:
         # spawn next generation
         # print("Start of gen {}".format(gen))
         gen += 1
@@ -117,6 +126,10 @@ def evolve(population_size, mutation_rate, elitism_rate, create_rate, crossover_
             avg += ind.fitness.value
         avg /= population_size
         print("AVG Fitness of gen {} is {}".format(gen, avg))
+
+    print("Best grouping: " + str(best_grouping))
+    print_grouping(best_grouping)
+    print("Best fitness: " + str(best_fitness))
 
 def crossover(individual_one, individual_two):
 
@@ -146,11 +159,10 @@ def crossover(individual_one, individual_two):
     # print("added equals: {}".format(offspring))
 
     # step through groupings one and two, adding a whole group when possible to offspring. alternate between groupings after every successful addition
-    # FIXME: TODO: TEST THIS
     on_one = True
     index_one = 0
     index_two = 0
-    while index_one < len(grouping_one) and index_two < len(grouping_two):
+    while index_one < len(grouping_one) or index_two < len(grouping_two):
         if on_one and index_one < len(grouping_one):
             dupl = False
             for student in grouping_one[index_one]:
@@ -321,6 +333,10 @@ def select(population: List[Individual]):
 
 
 def calculate_fitness(grouping: List[List[Student]]):
+
+    global best_grouping
+    global best_fitness
+
     # STUDENT PREFERENCES
     preferences_count = 0
     for group in grouping:
@@ -392,4 +408,16 @@ def calculate_fitness(grouping: List[List[Student]]):
 
     fairness_value = 1 - np.mean(skills_coef_by_grouping)
 
-    return Fitness(preferences_value, balance_value, fairness_value)
+    current_fitness = Fitness(preferences_value, balance_value, fairness_value)
+    if current_fitness > best_fitness:
+        best_fitness = current_fitness
+        best_grouping = grouping
+
+    return current_fitness
+
+
+def print_grouping(grouping):
+    for index, group in enumerate(grouping):
+        print("Group " + str(index) + "\n")
+        for student in group:
+            print(student)
