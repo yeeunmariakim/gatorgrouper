@@ -2,20 +2,20 @@
 
 GatorGrouper is a Python program that creates student groups based on preferences and skills, which are evaluated through a Google Form. It uses a genetic algorithm to generate groups that have three properties:
 
-- **Preferences**. Groups respect preferences. If Maria indicates on the Google Form that she would like to work with Saejin, then Maria and Saejin should, if at all possible, end up in the same group. If both Maria and Saejin list each other as preferences, they should have an even greater chance of ending up in the same group.
-- **Skill balance**. Skills within groups are equally distributed among students. For example, assume Maria and Saejin are in a group. The group would not be balanced if Maria had a score of 1 for all of the skills (1, 1, 1, 1, 1) and Saejin had a score of 5 for all of the skills (5, 5, 5, 5, 5). The group would be more balanced if Maria had a score of 1 for three out of five skills and 5 for two out of the five skills (1, 1, 1, 5, 5) and Saejin had a score of 5 for three out of five skills and a score of 1 for two out of the five skills (5, 5, 5, 1, 1).
-- **Skill fairness**. All groups should be about equal in each skill.
+- **Preferences**. Groups respect preferences. If Student A indicates on the Google Form that they would like to work with Student B, then Student A and Student B should, if at all possible, end up in the same group. If both Student A and Student B list each other as preferences, they should have an even greater chance of ending up in the same group.
+- **Skill balance**. Each group has approximately equal overall levels of all skills. For example, assume Student A and Student B end up in the same group. The group would not be balanced if both students were high in the same skill, but both low in the other skill required for the assignment. This group would be more balanced if Student A was high in the first skill and low in the second skill and Student B was low in the first skill and high in the second.
+- **Skill fairness**. All groups should be about equal in each skill. Two groups would be fair if both groups had approximate overall scores of 3 in the first skill and approximate overall scores of 4 in the second skill.
 
 ## Configuration
 
-Before running GatorGrouper, you will need to create a Google Form to collect the feedback from students. In the settings, check the **Collect email addresses** and **Limit to 1 response** options. If you are using an organizational email (e.g. Allegheny College email) to create this Google Form, you may also want to select the **Restrict to <ORGANIZATION NAME> users** option. This will mean that the emails of all respondents to the survey will follow the format *\<EMAIL>@\<ORGANIZATION SUFFIX>* (e.g. kimy@allegheny.edu), which will help students to list the correct emails of their preferences.
+Before running GatorGrouper, you will need to create a Google Form to collect the feedback from students. In the settings, check the **Collect email addresses** and **Limit to 1 response** options. If you are using an organizational email (e.g. Allegheny College email) to create this Google Form, you may also want to select the **Restrict to <ORGANIZATION NAME> users** option. This will mean that the emails of all respondents to the survey will follow the format *\<EMAIL>@\<ORGANIZATION SUFFIX>* (e.g. studenta@allegheny.edu), which will help students to list the correct emails of their preferences.
 
 ![settings](img/settings.png "Settings")
 
 As described above, GatorGrouper supports two types of questions: preferences and skill.
 
 The preferences question should ask students to list the emails of other students they want in their groups. Responses to this question must comply to these rules:
-- Emails in the list must match the emails that preferences are using to submit the Google Form. For example, if Maria wants to list Saejin as a preference, she must list the email he is using to submit the Google Form.
+- Emails in the list must match the emails that preferences are using to submit the Google Form. For example, if Student A wants to list Student B as a preference, they must list the email Student B is using to submit the Google Form (e.g. studentb@allegheny.edu).
 - The list must be comma-separated.
 - The number of preferences must depend on group sizes. For example, if the group size is 2, students should only list one preference. If they list more, only the first preference will be considered. (To be general, the number of preferences should be one less than the group size, and and only the preferences that come first in the list up to the number limit will be considered).
 
@@ -41,7 +41,7 @@ Once you have generated your `client_secret.json` file, place it in the GatorGro
 
 ## Set-up
 
-GatorGrouper requires Python 3. To install dependencies, run the command:
+GatorGrouper requires Python 3. After installing Python 3 (and `pip`, the Python package manager), install dependencies by running the command:
 
 ```shell
 pip install -r requirements.txt
