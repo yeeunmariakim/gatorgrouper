@@ -19,13 +19,4 @@ if __name__ == '__main__':
 
     workbook.get(GROUP_SIZE)
 
-    # GROUPING = create()
-    #
-    # for index, group in enumerate(GROUPING):
-    #     print("Group " + str(index) + "\n")
-    #     for student in group:
-    #         print(student)
-    #
-    # print(calculate_fitness(GROUPING))
-
     evolve(60, 0.33, 0.16, 0.18, 0.66, mutations.get())
