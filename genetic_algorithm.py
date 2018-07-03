@@ -7,7 +7,6 @@ import workbook
 import math
 
 
-
 class Student:
     """Represent student."""
     def __init__(self, email: str, skills: List[int], preferences: List[str]):
@@ -131,6 +130,7 @@ def evolve(population_size, mutation_rate, elitism_rate, create_rate, crossover_
     print_grouping(best_grouping)
     print("Best fitness: " + str(best_fitness))
 
+
 def crossover(individual_one, individual_two):
 
     grouping_one = individual_one.grouping[:]
@@ -229,7 +229,6 @@ def crossover(individual_one, individual_two):
         print("CROSSED OVER GROUPING NOT SAME SIZE")
 
     return offspring
-
 
 
 def mutate(mutations, grouping: List[List[Student]]):
